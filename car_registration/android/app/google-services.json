@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "266907081661",
+    "project_id": "car-registration-c42cf",
+    "storage_bucket": "car-registration-c42cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:266907081661:android:d7fd5f94dfa1c564c0d0d4",
+        "android_client_info": {
+          "package_name": "com.example.car_registration"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-XmDkLGiO8PG_cQZ9yEl6QSyotMUdXJ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
