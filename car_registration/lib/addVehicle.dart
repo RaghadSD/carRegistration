@@ -600,8 +600,8 @@ class _addVehicle extends State<addVehicle> {
                           !_showErrorPlate) {
                         final docData = {
                           "userId": "",
-                          "managerId": "",
-                          "carPlate": carPalte.text,
+                          "managerId": "", //get manager id
+                          "carPlate": carPalte.text.toUpperCase(),
                           "phoneNumber": phone.text,
                           "MakerEn": carMaker.text,
                           "makerAr": "",
@@ -609,9 +609,16 @@ class _addVehicle extends State<addVehicle> {
                           "statusAr": "تم استلام المركبة",
                           "statusEn": "Receiving Vehicle",
                         };
-                        _firestore.collection("Cars").add(docData).then(
-                            (documentSnapshot) => print(
-                                "Added Data with ID: ${documentSnapshot.id}"));
+                        //get manager id
+                        _firestore
+                            .collection("Cars")
+                            .doc("A") //uid
+                            .set(docData)
+                            .onError(
+                                (e, _) => print("Error writing document: $e"));
+                        // _firestore.collection("Cars").add(docData).then(
+                        //     (documentSnapshot) => print(
+                        //         "Added Data with ID: ${documentSnapshot.id}"));
                         phone.clear();
                         carPalte.clear();
                         carMaker.clear();
