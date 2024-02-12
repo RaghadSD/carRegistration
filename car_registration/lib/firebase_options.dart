@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,8 +25,15 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
+        return macos;
+      case TargetPlatform.windows:
         throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
+          'DefaultFirebaseOptions have not been configured for windows - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
+      case TargetPlatform.linux:
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for linux - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
       default:
@@ -39,22 +43,39 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyC_7EU5KJKbIVSK2bJfbIl6gPV-SOce_t8',
+    appId: '1:266907081661:web:6134f7747f3f2d57c0d0d4',
+    messagingSenderId: '266907081661',
+    projectId: 'car-registration-c42cf',
+    authDomain: 'car-registration-c42cf.firebaseapp.com',
+    storageBucket: 'car-registration-c42cf.appspot.com',
+    measurementId: 'G-XGJEBTSS2Y',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDJuFyTE4_bMt7o-uXjLrgF96ZR1qVKGww',
-    appId: '1:750046757369:android:f63f090009102fa476bd28',
-    messagingSenderId: '750046757369',
-    projectId: 'taskify-e4ca5',
-    storageBucket: 'taskify-e4ca5.appspot.com',
+    apiKey: 'AIzaSyD-XmDkLGiO8PG_cQZ9yEl6QSyotMUdXJ4',
+    appId: '1:266907081661:android:d7fd5f94dfa1c564c0d0d4',
+    messagingSenderId: '266907081661',
+    projectId: 'car-registration-c42cf',
+    storageBucket: 'car-registration-c42cf.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyB-hJzhUdKEiNQRFjzKARMVg2qoa3Irmi4',
-    appId: '1:750046757369:ios:75aa8524572e005976bd28',
-    messagingSenderId: '750046757369',
-    projectId: 'taskify-e4ca5',
-    storageBucket: 'taskify-e4ca5.appspot.com',
-    iosClientId:
-        '750046757369-6q3clb8ashbr4tf8p36f6ribfmmkpqer.apps.googleusercontent.com',
-    iosBundleId: 'com.cracklog.faay',
+    apiKey: 'AIzaSyDi3pa4bWlOThVdYU1xJSkXzW_xaNlbNmQ',
+    appId: '1:266907081661:ios:d08d0cbcfbc3f53cc0d0d4',
+    messagingSenderId: '266907081661',
+    projectId: 'car-registration-c42cf',
+    storageBucket: 'car-registration-c42cf.appspot.com',
+    iosBundleId: 'com.example.carRegistrations',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDi3pa4bWlOThVdYU1xJSkXzW_xaNlbNmQ',
+    appId: '1:266907081661:ios:f7ef1628d45b5c67c0d0d4',
+    messagingSenderId: '266907081661',
+    projectId: 'car-registration-c42cf',
+    storageBucket: 'car-registration-c42cf.appspot.com',
+    iosBundleId: 'com.example.carRegistration.RunnerTests',
   );
 }
