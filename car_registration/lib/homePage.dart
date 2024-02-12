@@ -1,9 +1,8 @@
+import 'package:car_registration/FirebaseSearchableList.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
-import 'package:line_icons/line_icons.dart';
-import 'package:searchable_listview/searchable_listview.dart';
-// import 'package:line_icons/line_icons.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -14,41 +13,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  TextEditingController search = TextEditingController();
-
-  List<String> itemList = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-  List<String> itemList2 = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-  List<String> itemList3 = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
-  List<String> itemList4 = [
-    'Item 1',
-    'Item 2',
-    'Item 3',
-    'Item 4',
-    'Item 5',
-  ];
+  FirebaseFirestore db = FirebaseFirestore.instance;
 
   @override
   void initState() {
     super.initState();
-
     _tabController = TabController(length: 4, vsync: this);
   }
 
@@ -124,94 +93,7 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
                           .zero, // Adjust the margin or padding as needed
                       height: 640,
                       width: 410,
-                      child: SearchableList<String>(
-                          emptyWidget: const EmptyView(),
-                          listViewPadding: EdgeInsets.symmetric(
-                              horizontal: 0.0, vertical: 10.0),
-                          displaySortWidget: true,
-                          sortPredicate: (a, b) => a.compareTo(b),
-                          // sortPredicate: (a, b) => a.age.compareTo(b.age),
-                          defaultSuffixIconColor: Colors.grey,
-                          searchTextController: search,
-                          onSubmitSearch: (value) {
-                            search.text = value!;
-                          },
-                          spaceBetweenSearchAndList: 0,
-                          builder: (list, index, item) {
-                            // return ActorItem(actor: item);
-                            // onItemSelected:,
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-                                  child: Container(
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: Color.fromARGB(0, 238, 238, 238),
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor: Colors.grey[200],
-                                          radius: 25,
-                                          child: Icon(
-                                            LineIcons.carSide,
-                                            color: button_color,
-                                            size: 30,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 10,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Text('ABC2012',
-                                                style: ourTextStyle(
-                                                    txt_color: txt_color,
-                                                    txt_size: heightM * 0.5)),
-                                            Text('Audi',
-                                                style: inputTextStyle(
-                                                    txt_color: txt_color,
-                                                    txt_size: heightM * 0.5)),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Divider(),
-                              ],
-                            );
-                          },
-                          initialList: itemList,
-                          // filter: (p0) {
-                          //   return actors
-                          //       .where((element) => element.name.contains(p0))
-                          //       .toList();
-                          // },
-                          inputDecoration: InputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 8),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                color: button_color,
-                              ),
-                            ),
-                            labelStyle: inputTextStyle(
-                                txt_color: txt_color, txt_size: heightM * 0.45),
-                            labelText: 'Search',
-                            border: OutlineInputBorder(),
-                            fillColor: Colors.white,
-                          ),
-                          closeKeyboardWhenScrolling: true)),
+                      child: MyFirebaseSearchableList()),
                 ))
           ],
         ),
@@ -229,22 +111,94 @@ class _HomePage extends State<HomePage> with SingleTickerProviderStateMixin {
     return GoogleFonts.cairo(
         color: txt_color, fontWeight: FontWeight.w500, fontSize: txt_size);
   }
+
+  // List<String> dataList = [];
+
+  // void fetchData() async {
+  //   List<String> data = await fetchDataFromFirebase();
+  //   setState(() {
+  //     dataList = data;
+  //   });
+  // }
+
+//   List<carModel> carsList = [];
+//   late List<String> initialCars;
+//   void getCars() async {
+//     final res = await FirebaseFirestore.instance
+//         .collection('Cars')
+//         .where('userId', isEqualTo: "A")
+//         .get();
+//     print(res);
+//     for (int i = 0; i < res.docs.length; i++) {
+//       print(
+//         res.docs[i]['userId'],
+//       );
+//       print(
+//         res.docs[i]['managerId'],
+//       );
+//       print(
+//         res.docs[i]['carPlate'],
+//       );
+//       print(
+//         res.docs[i]['phoneNumber'],
+//       );
+//       print(
+//         res.docs[i]['MakerEn'],
+//       );
+//       print(
+//         res.docs[i]['makerAr'],
+//       );
+//       print(
+//         res.docs[i]['date'],
+//       );
+//       print(
+//         res.docs[i]['statusAr'],
+//       );
+//       print(
+//         res.docs[i]['statusEn'],
+//       );
+
+//       carModel carr = carModel(
+//           userId: res.docs[i]['userId'],
+//           managerId: res.docs[i]['managerId'],
+//           carPlate: res.docs[i]['carPlate'],
+//           phoneNumber: res.docs[i]['phoneNumber'],
+//           MakerEn: res.docs[i]['MakerEn'],
+//           makerAr: res.docs[i]['makerAr'],
+//           date: res.docs[i]['date'],
+//           statusAr: res.docs[i]['statusAr'],
+//           statusEn: res.docs[i]['statusEn']);
+//       initialCars.add(res.docs[i]['carPlate']);
+//       carsList.add(carr);
+//     }
+//   }
 }
 
-class EmptyView extends StatelessWidget {
-  const EmptyView({Key? key}) : super(key: key);
+// Future<List<String>> fetchDataFromFirebase() async {
+//   List<String> dataList = [];
+//   try {
+//     QuerySnapshot res = await FirebaseFirestore.instance
+//         .collection('Cars')
+//         .where('userId', isEqualTo: "A")
+//         .get();
+//     res.docs.forEach((doc) {
+//       carModel carr = carModel(
+//         userId: doc.get('userId'),
+//         managerId: doc.get('managerId'),
+//         carPlate: doc.get('carPlate'),
+//         phoneNumber: doc.get('phoneNumber'),
+//         MakerEn: doc.get('MakerEn'),
+//         makerAr: doc.get('makerAr'),
+//         date: doc.get('date'),
+//         statusAr: doc.get('statusAr'),
+//         statusEn: doc.get('statusEn'),
+//       );
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Icon(
-          Icons.error,
-          color: Colors.red,
-        ),
-        Text('no actor is found with this name'),
-      ],
-    );
-  }
-}
+//       // dataList.add(res.docs[i]['carPlate']);
+//       dataList.add(doc.get('carPlate'));
+//     });
+//   } catch (e) {
+//     print('Error retrieving data: $e');
+//   }
+//   return dataList;
+// }
